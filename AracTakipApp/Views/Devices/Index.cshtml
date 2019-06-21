@@ -1,0 +1,100 @@
+﻿@*@model IEnumerable<AracTakipApp.Models.Device>*@
+@using PagedList
+@using PagedList.Mvc
+@model IPagedList<AracTakipApp.Models.Device>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Araç Listesi</h3>
+
+<p>
+    @Html.ActionLink("Yeni Araç Ekle", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Plaka Numarası
+        </th>
+        <th>
+            Birim Adı
+        </th>
+        <th>
+            Marka
+        </th>
+        <th>
+            Model
+        </th>
+        <th>
+            Model Yılı
+        </th>
+        <th>
+            Çeşit
+        </th>
+        <th>
+            Tür
+        </th>
+        <th>
+            Araç Durumu
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LicenseNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unit.UnitName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Brand.BrandName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModelYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kind)
+            @if (item.Kind == false)
+            {
+                <span>Kiralık</span>
+            }
+            else
+            {
+                <span>Orijinal</span>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+            @if (item.Type == false)
+            {
+                <span>Saha Aracı</span>
+            }
+            else
+            {
+                <span>Havuz Aracı</span>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeviceSituation)
+            @if (item.DeviceSituation == false)
+            {
+                <span>Faal Değil</span>
+            }
+            else
+            {
+                <span>Faal</span>
+            }
+        </td>
+    </tr>
+    }
+
+</table>
+<div class="pagedList">
+    @Html.PagedListPager(Model, sayfa => Url.Action("Index", new { sayfa }), PagedListRenderOptions.PageNumbersOnly)
+</div>
